@@ -1,0 +1,1 @@
+Como saber si el politopo tiene interior extricto, y no solo frontera?
