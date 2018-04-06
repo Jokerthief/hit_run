@@ -1,2 +1,8 @@
 Como saber si el politopo tiene interior extricto, y no solo frontera?
 Qué métdo para generar una normal utilizamos? -> D&D, Box-Muller....
+
+
+
+
+Sources:
+http://apodeline.free.fr/FAQ/CGAFAQ/CGAFAQ-3.html
