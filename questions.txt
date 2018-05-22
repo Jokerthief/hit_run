@@ -1,9 +1,0 @@
-Como saber si el politopo tiene interior extricto, y no solo frontera?
-Qué métdo para generar una normal utilizamos? -> D&D, Box-Muller....
-
-
-
-
-Sources:
-INterior points : (3.6) http://apodeline.free.fr/FAQ/CGAFAQ/CGAFAQ-3.html
-magma : https://developer.nvidia.com/sites/default/files/akamai/cuda/files/Misc/mygpu.pdf
