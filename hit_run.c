@@ -1,6 +1,7 @@
 #include "Headers/init.h"
 #include "Headers/chebyshev_center.h"
 #include "Headers/matrix_operations.h"
+#include "Headers/box_muller.h"
 
 int main(int argc, char *argv[]) {
   parse_arguments(argc, argv);
