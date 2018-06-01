@@ -4,9 +4,8 @@ Authors:
 - Mario Vazquez Corte
 - Saúl Caballero Ramírez
 
-TODO
+Instrucciones:
 
-- [x] Chebyshev Center
-- [x] Matrix multiplication & invertion in CUDA
-- [ ] Find borders of the polytope
-- [ ] Final Sampler
+Instalar MAGMA y modificar MAKEFILE con la ubicación de las librerías para poder ejecutar el código.
+También hay que poner las matrices que dan las restricciones.
+El código ejecutable compilado dice como mandar el número de variables, restricciones de igualdad y de desigualdad.

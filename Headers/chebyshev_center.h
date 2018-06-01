@@ -19,14 +19,13 @@ double norm_2(int N, double x[N]) {
   return sqrt(sum);
 }
 
-void get_initvalue() {
+void get_initvalue(double x_0[NUMBER_VARIABLES]) {
   lprec *lp;
-  // Define empty model
+  // Define empty model  printf("hola\n");
+
   lp = make_lp(0, 0);
-  set_col_name(lp, 1, "x_1");
-  set_col_name(lp, 2, "x_2");
-  set_col_name(lp, 3, "x_3");
-  set_col_name(lp, 4, "R");
+
+  set_col_name(lp, (NUMBER_VARIABLES+1), "R");
   // Objective function
   double obj_vector[NUMBER_VARIABLES + 2];
   for (int i = 0; i < (NUMBER_VARIABLES + 1); i++) {
@@ -46,7 +45,8 @@ void get_initvalue() {
     aux[(NUMBER_VARIABLES + 1)] = 0;
     add_constraint(lp, aux, EQ, P_EQUALITY->b[i]);
   }
-  // Set inequality restrictions
+
+    // Set inequality restrictions
   for (int i = 0; i < NUMBER_INEQUALITIES; i++) {
     for (int j = 0; j < NUMBER_VARIABLES; j++) {
       aux[j + 1] = (P_INEQUALITY->a[i][j]);
@@ -55,6 +55,7 @@ void get_initvalue() {
     aux[(NUMBER_VARIABLES + 1)] = norm_2(NUMBER_VARIABLES, P_INEQUALITY->a[i]);
     add_constraint(lp, aux, LE, P_INEQUALITY->b[i]);
   }
+
   // Positivity conditions
   for (int i = 0; i < NUMBER_VARIABLES; i++) {
     for (int j = 0; j < NUMBER_VARIABLES; j++) {
@@ -73,5 +74,6 @@ void get_initvalue() {
   set_maxim(lp);
   // write_lp(lp,"lp.model");
   solve(lp);
-  // print_solution(lp, 1);
+
+  get_variables(lp, x_0);
 }

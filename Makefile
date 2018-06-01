@@ -2,14 +2,16 @@
 # Paths where MAGMA, CUDA, and OpenBLAS are installed.
 # MAGMADIR can be .. to test without installing.
 #MAGMADIR     ?= ..
+
 # Configuración de Mario
-# MAGMADIR     = /media/mario/G/MAGMA/magma-2.3.0
-# CUDADIR      = /usr/local/cuda-9.1
-# OPENBLASDIR  = /usr/include/openblas
-# Configuración de Saúl
-MAGMADIR     = /usr/local/magma
-CUDADIR      = /usr/lib/cuda
-OPENBLASDIR  = /usr/lib/x86_64-linux-gnu/openblas
+MAGMADIR     = /media/mario/G/MAGMA/magma-2.3.0
+CUDADIR      = /usr/local/cuda-9.1
+OPENBLASDIR  = /usr/include/openblas
+
+# # Configuración de Saúl
+# MAGMADIR     = /usr/local/magma
+# CUDADIR      = /usr/lib/cuda
+# OPENBLASDIR  = /usr/lib/x86_64-linux-gnu/openblas
 
 CC            = gcc
 LDFLAGS       = -Wall -lm -no-pie

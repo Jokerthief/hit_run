@@ -49,24 +49,43 @@ Matrix dimensions:
   A: m x m
 */
 
-double** inverse_matrix(magma_int_t m, double A[m][m]){
+int inverse_matrix(int M, double **A_out){
+
+  magma_init();
+
+ #ifndef REAL
+ #define REAL "REAL"
+ #endif
+
+
 
   magmaDouble_ptr dA=NULL, dX=NULL, dI=NULL;
   magma_int_t iter ;
   magma_int_t info ;
+  magma_int_t m = M;
   magma_queue_t queue=NULL;
-
   iter=0;
   info=1;
+  double I[m][m];
+  double X[m][m];
+  double A[m][m];
 
-  double **I; // Identity
-  double **X;     // The inverse
-  X = (double **)malloc(sizeof(double *) * m);
-  I = (double **)malloc(sizeof(double *) * m);
-  for(int i = 0; i < m; i++){
-    X[i] = (double *)malloc(sizeof(double) * m);
-    I[i] = (double *)malloc(sizeof(double) * m);
-  }
+for(int a = 0; a < m; a++)
+{
+  for(int b = 0 ; b < m; b++)
+  A[a][b] = A_out[b][a];
+}
+  //
+  // X = (double **)malloc(sizeof(double *) * m);
+  // I = (double **)malloc(sizeof(double *) * m);
+  // for(int i = 0; i < m; i++){
+  //   X[i] = (double *)malloc(sizeof(double) * m);
+  //   I[i] = (double *)malloc(sizeof(double) * m);
+  // }
+
+
+
+
   magma_dmalloc( &dA, m*m );
   magma_dmalloc( &dX, m*m );
   magma_dmalloc( &dI, m*m );
@@ -82,7 +101,7 @@ double** inverse_matrix(magma_int_t m, double A[m][m]){
   {
     for(j = 0; j<m; j++)
     {
-      X[i][j] = (double)0.0;
+      X[i][j] = (double)1.0;
       I[i][j] = (double)0.0;
       if(j == i){ I[i][j] = 1.0;}
     }
@@ -90,12 +109,14 @@ double** inverse_matrix(magma_int_t m, double A[m][m]){
   magma_int_t dev = 0;
   magma_queue_create( dev, &queue );
 
+
   magma_setmatrix(m,m, sizeof(double),A,m,dA,m, queue);
   magma_setmatrix(m,m, sizeof(double),I,m,dI,m, queue);
   magma_setmatrix(m,m, sizeof(double),X,m,dX,m, queue);
 
-  //Debugging: Prints the matrix stored in the GPU
 
+  //Debugging: Prints the matrix stored in the GPU
+  //
   // printf(" A_GPU: \n");
   // magma_dprint_gpu(m,m, dA,m, queue);
   //
@@ -115,20 +136,36 @@ double** inverse_matrix(magma_int_t m, double A[m][m]){
 
   //Print status of the solver operation
 
-  // printf(" Sol_GPU: \n");
-  // magma_dprint_gpu(m,m, dX,m, queue);
+   printf(" Sol_GPU: \n");
+    magma_dprint_gpu(m,m, dX,m, queue);
   //
-  // printf(" Sol_CPU: \n");
-  // magma_dprint(m,m, X,m);
+  printf(" Sol_CPU: \n");
+  magma_dprint(m,m, X,m);
 
   if(info !=0){
     error_dsgeqrsv(iter,info);
   } // else{printf("\n Praise the Sun !!!! \n");}
   magma_free(dA);
+
   magma_free(dX);
+
   magma_free(dI);
-  free(I);
-  return(X);
+
+
+  magma_finalize();
+
+  for( i = 0; i<m; i++)
+  {
+    for(j = 0; j<m; j++)
+    {
+      A_out[i][j] = X[i][j];
+    }
+  }
+  #ifndef REAL
+  #define REAL "double"
+  #endif
+
+  return 0;
 }
 
 

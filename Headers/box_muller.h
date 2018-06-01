@@ -6,7 +6,7 @@ static unsigned NUMBER_VARIABLES;
 static unsigned NUMBER_EQUALITIES;
 static unsigned NUMBER_INEQUALITIES;
 
-void normal_generator(double *d){
+void normal_generator(double **d){
 
 /*The algorith creates them in pairs, so one entry may need to be discarded */
   unsigned discard = NUMBER_VARIABLES % 2;
@@ -26,23 +26,23 @@ void normal_generator(double *d){
 
     if( discard & (discard_index == i || discard_index == i+1 ))
     {
-        d[i] = U1 * mult;
+        d[i][i] = U1 * mult;
         i--;
     }else{
-        d[i] = U1 * mult;
-        d[i+1] = U2 * mult;
+        d[i][i] = U1 * mult;
+        d[i+1][i+1] = U2 * mult;
     }
   }
   double a =0;
 
   for(int j = 0 ; j<NUMBER_VARIABLES; j++)
   {
-    a += d[j];
+    a += d[j][j];
   }
 
   for(int j = 0 ; j<NUMBER_VARIABLES; j++)
   {
-    d[j] = d[j]/a;
+    d[j][j] = d[j][j]/a;
   }
 
 } // END of normal_generator
